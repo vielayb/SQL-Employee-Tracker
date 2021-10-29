@@ -31,7 +31,11 @@ app.get('/', (req, res) => {
 //   query the database to test the connection reference 12.2.4
 // Get all employees
 app.get('/api/employees', (req, res) => {
-  const sql = `SELECT * FROM employees`;
+  const sql = `SELECT employees.*, roles.title 
+             AS position 
+             FROM employees 
+             LEFT JOIN roles 
+             ON employees.role_id = roles.id`;
 
   db.query(sql, (err, rows) => {
     if (err) {
@@ -47,7 +51,12 @@ app.get('/api/employees', (req, res) => {
 
 // GET a single employee
 app.get('/api/employee/:id', (req, res) => {
-  const sql = `SELECT * FROM employees WHERE id = ?`;
+  const sql = `SELECT employees.*, roles.title 
+             AS position 
+             FROM employees 
+             LEFT JOIN roles 
+             ON employees.role_id = roles.id 
+             WHERE employees.id = ?`;
   const params = [req.params.id];
 
   db.query(sql, params, (err, row) => {

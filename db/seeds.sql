@@ -1,6 +1,11 @@
 INSERT INTO department (name)
 VALUES ('Development');
 
+INSERT INTO roles (title, salary, department_id)
+  VALUES 
+      ('Manager', 150000, 1),
+      ('Front End', 70000, 1),
+      ('Back End', 90000, 1);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
@@ -16,8 +21,4 @@ VALUES
   ('Unica', 'Zurn', 2, 1);
 
 
-  INSERT INTO roles (title, salary, department_id)
-  VALUES 
-      ('Manager', 150000, 1)
-      ('Front End', 70000, 1),
-      ('Back End', 90000, 1);
+  
