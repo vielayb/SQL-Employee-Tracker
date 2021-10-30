@@ -18,7 +18,7 @@ router.get('/departments', (req, res) => {
     });
   });
 
-  // Get single voter
+  // Get single department
 router.get('/department/:id', (req, res) => {
   const sql = `SELECT * FROM departments WHERE id = ?`;
   const params = [req.params.id];
@@ -37,14 +37,14 @@ router.get('/department/:id', (req, res) => {
 
 router.post('/department', ({ body }, res) => {
   // Data validation
-  const errors = inputCheck(body, 'department_name');
+  const errors = inputCheck(body, 'name');
   if (errors) {
     res.status(400).json({ error: errors });
     return;
   }
-  
-  const sql = `INSERT INTO departments (department_name) VALUES (?)`;
-  const params = [body.department_name];
+
+  const sql = `INSERT INTO departments (name) VALUES (?)`;
+  const params = [body.name];
 
   db.query(sql, params, (err, result) => {
     if (err) {
@@ -55,6 +55,27 @@ router.post('/department', ({ body }, res) => {
       message: 'success',
       data: body
     });
+  });
+});
+
+//Delete department
+router.delete('/department/:id', (req, res) => {
+  const sql = `DELETE FROM departments WHERE id = ?`;
+
+  db.query(sql, req.params.id, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: res.message });
+    } else if (!result.affectedRows) {
+      res.json({
+        message: 'Department not found'
+      });
+    } else {
+      res.json({
+        message: 'deleted',
+        changes: result.affectedRows,
+        id: req.params.id
+      });
+    }
   });
 });
 
