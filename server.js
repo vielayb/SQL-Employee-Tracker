@@ -1,5 +1,7 @@
+const inquirer = require('inquirer');
 const express = require('express');
 const db = require('./db/connection');
+const questions = require('./index')
 // Add near the top of the file
 const apiRoutes = require('./routes/apiRoutes');
 
